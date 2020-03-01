@@ -8,7 +8,6 @@ module.exports = function repeater(str, options) {
     let separator = options.separator ? options.separator : '+';
     let additionSeparator = options.additionSeparator ? options.additionSeparator : '|';
 
-
     return repeatStringWithSeparator(
         mainString +
         repeatStringWithSeparator(additionString, additionSeparator, options.additionRepeatTimes),
