@@ -24,7 +24,7 @@ class VigenereCipheringMachine {
         if (!message || !key) throw new Error()
         message = message.toUpperCase().split('');
         key = this.buildKey(message, key.toUpperCase())
-        let result = []; 
+        let result = [];
 
         for (let i = 0; i < message.length; i++) {
             if (message[i].charCodeAt() < 65 || message[i].charCodeAt() > 90) {
