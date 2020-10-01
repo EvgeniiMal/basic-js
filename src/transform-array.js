@@ -1,27 +1,30 @@
 module.exports = function transform(arr) {
     if (!Array.isArray(arr)) throw new Error('arr is not Array');
+    const result = [];
 
-    let controller = {
-        '--double-next': (index) => {
-            arr[index + 1] !== undefined ? arr[index] = arr[index + 1] : arr.splice(index, 1);
-        },
-        '--double-prev': (index) => {
-            arr[index - 1] !== undefined ? arr[index] = arr[index - 1] : arr.splice(index, 1);
-        },
-        '--discard-next': (index) => {
-            arr[index + 1] !== undefined ? arr.splice(index, 2) : arr.splice(index, 1);
-        },
-        '--discard-prev': (index) => {
-            arr[index - 1] !== undefined ? arr.splice(index - 1, 2) : arr.splice(index, 1);
+  for (let i = 0; i < arr.length; i++) {
+    switch(arr[i]) {
+      case '--discard-next':
+        i += 1;
+        break;
+      case '--discard-prev':
+        if (arr[i - 2] !== '--discard-next') {
+          result.pop();
         }
-    };
-
-    for (let [flag, controlFunction] of Object.entries(controller)) {
-        if (arr.indexOf(flag) != -1) {
-            controlFunction(arr.indexOf(flag));
-            transform(arr);
+        break;
+      case '--double-next':
+        if (i + 1 < arr.length) {
+          result.push(arr[i + 1]);
         }
+        break;
+      case '--double-prev':
+        if (i - 1 >= 0 && arr[i - 2] !== '--discard-next') {
+          result.push(arr[i - 1]);
+        }
+        break;
+      default:
+        result.push(arr[i]);
     }
-
-    return arr;
-};
+  }
+  return result;
+    }
