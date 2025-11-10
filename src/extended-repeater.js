@@ -17,7 +17,6 @@ const { NotImplementedError } = require('../lib');
  */
 
 function repeater(/* str, options */) {
-  // Remove line below and write your code here
   throw new NotImplementedError('Not implemented');
 }
 
